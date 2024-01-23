@@ -2,22 +2,28 @@ build:
 	docker compose build
 
 run:
-	docker-compose up
+	docker compose up
+
+stop:
+	docker-compose stop
 
 logs::
 	docker-compose logs -f
 
+tests::
+	docker compose run propertybackend pytest
+
 migrate:
-	docker-compose run propertybackend python manage.py migrate
+	docker compose run propertybackend python manage.py migrate
 
 makemigrations:
-	docker-compose run propertybackend python manage.py makemigrations
+	docker compose run propertybackend python manage.py makemigrations
 
 collectstatic:
-	docker-compose run propertybackend python manage.py collectstatic --noinput
+	docker compose run propertybackend python manage.py collectstatic --noinput
 
 clean:
-	docker-compose down -v
+	docker compose down -v
 
 setup:
 	@make build
@@ -34,3 +40,8 @@ full_build:
 	@make build
 	@make migrate
 	@make collectstatic
+
+restart:
+	@make stop
+	@make run
+	@make logs
