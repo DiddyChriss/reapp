@@ -14,6 +14,7 @@ Simple API for managing properties, contain:
 * Django REST Framework
 * Docker
 * Docker-compose
+* AWS
 
 ### Linux 
 

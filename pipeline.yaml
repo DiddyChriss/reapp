@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10.12
+    commands:
+      - pip install awscli
+      - echo "Install phase..."
+  build:
+    commands:
+      - echo "Build phase..."
+  post_build:
+    commands:
+      - echo "Post-build phase..."
+artifacts:
+  files:
+    - '**/*'
