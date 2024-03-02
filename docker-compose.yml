@@ -11,13 +11,14 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
   propertybackend:
+    image: diddyinnovtion/reapp:latest
     container_name: propertybackend
     env_file: .env
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "80:8000"
     links:
       - propertysqldb
     volumes:

@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "propertyapp"
+name = "core"
 version = "0.1.0"
 description = "API v1"
 authors = ["Diddychriss"]
 readme = "README.md"
-packages = [{include = "propertyapp"}]
+packages = [{include = "core"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
