@@ -13,10 +13,11 @@ services:
   propertybackend:
     image: diddyinnovtion/reapp:latest
     container_name: propertybackend
-    env_file: .env
     build:
       context: ./
       dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
       - "80:8000"
     links:
@@ -25,7 +26,11 @@ services:
       - ./:/usr/src/app
       - ./static/:/usr/src/app/static
       - ./static/:/usr/src/app/staticfiles
-    command: sh -c "python3 manage.py migrate && chmod +x create_superuser.sh && /bin/sh -c './create_superuser.sh' && python3 manage.py runserver 0.0.0.0:8000"
+    command: >
+      sh -c "python3 manage.py migrate &&
+      chmod +x create_superuser.sh &&
+      /bin/sh -c './create_superuser.sh' &&
+      python3 manage.py runserver 0.0.0.0:8000"
     stdin_open: true
     tty: true
     depends_on:

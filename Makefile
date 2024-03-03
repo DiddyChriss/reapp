@@ -5,7 +5,7 @@ run:
 	docker compose up
 
 stop:
-	docker-compose stop
+	docker compose stop
 
 logs::
 	docker-compose logs -f
