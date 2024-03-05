@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - chmod -R +x scripts/
+
+  pre_build:
+    commands:
+      - scripts/create_env_file.sh
+      - chmod +x .env
+      - scripts/build/pre_build.sh
+
+  build:
+    commands:
+      - scripts/build/build.sh
+
+  post_build:
+    commands:
+      - scripts/build/post_build.sh
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**/*
+    - .env
+    - docker-compose.staging.yml
+    - Makefile

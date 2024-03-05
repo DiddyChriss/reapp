@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+hooks:
+  BeforeInstall:
+    - location: scripts/deploy/before_install.sh
+      timeout: 200
+      runas: root
+  ApplicationStart:
+    - location: scripts/deploy/application_start.sh
+      timeout: 200
+      runas: root
+  ValidateService:
+    - location: scripts/deploy/validate_service.sh
+      timeout: 200
+      runas: root

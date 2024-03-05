@@ -1,0 +1,37 @@
+version: '3'
+services:
+  propertysqldb:
+    image: postgres
+    container_name: propertysqldb
+    environment:
+      - POSTGRES_DB=${BACKEND_POSTGRES_NAME}
+      - POSTGRES_USER=${BACKEND_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${BACKEND_POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  propertybackend:
+    image: ${REPOSITORY_URI}:${IMAGE_TAG}
+    container_name: propertybackend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "80:8000"
+    volumes:
+      - ./:/usr/src/app
+      - ./static/:/usr/src/app/static
+      - ./static/:/usr/src/app/staticfiles
+    depends_on:
+      - propertysqldb
+    command: >
+      sh -c "echo 'Current directory:' && pwd &&
+             echo 'Contents of current directory:' && ls -la &&
+             python3 manage.py migrate &&
+             chmod +x scripts/create_superuser.sh &&
+             /bin/sh -c './scripts/create_superuser.sh' &&
+             python3 manage.py runserver 0.0.0.0:8000" -d
+volumes:
+  postgres_data:
+

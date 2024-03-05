@@ -7,13 +7,16 @@ ENV PATH="${PATH}:/root/.poetry/bin"
 
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /usr/src/app
-RUN mkdir /usr/src/app/static
-RUN mkdir /usr/src/app/media
+RUN mkdir /usr/src/reapp
 
-WORKDIR /usr/src/app
-COPY pyproject.toml /usr/src/app
-COPY poetry.lock /usr/src/app
-COPY create_superuser.sh /create_superuser.sh
+ENV APPLICATION_DIR=/usr/src/reapp
+
+RUN mkdir $APPLICATION_DIR/static
+RUN mkdir $APPLICATION_DIR/media
+
+WORKDIR $APPLICATION_DIR
+
+COPY . $APPLICATION_DIR
+
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-root
