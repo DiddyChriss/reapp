@@ -12,5 +12,5 @@ IMAGE_TAG="${IMAGE_TAG}"
 echo Building the Docker image...
 docker compose -f docker-compose.staging.yml build
 
-echo "Printing images..."
+echo Printing images...
 docker images

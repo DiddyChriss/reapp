@@ -11,4 +11,4 @@ IMAGE_TAG="${IMAGE_TAG}"
 
 echo Pushing the Docker image...
 docker push $REPOSITORY_URI:$IMAGE_TAG
-echo "Build and push process completed."
+echo Build and push process completed.

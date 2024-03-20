@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - chmod -R +x scripts/
+
+  pre_build:
+    commands:
+      - scripts/build/pre_test.sh
+
+  build:
+    commands:
+      - scripts/build/run_tests.sh

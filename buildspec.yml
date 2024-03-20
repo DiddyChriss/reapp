@@ -22,7 +22,12 @@ phases:
 artifacts:
   files:
     - appspec.yml
+    - buildspec.test.yml
     - scripts/**/*
     - .env
+    - Dockerfile
     - docker-compose.staging.yml
     - Makefile
+    - pytest.ini
+    - pyproject.toml
+    - poetry.lock

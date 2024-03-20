@@ -16,7 +16,11 @@ RUN mkdir $APPLICATION_DIR/media
 
 WORKDIR $APPLICATION_DIR
 
-COPY . $APPLICATION_DIR
+COPY pyproject.toml $APPLICATION_DIR
+COPY poetry.lock $APPLICATION_DIR
+COPY scripts/create_superuser.sh $APPLICATION_DIR/scripts/create_superuser.sh
 
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-root
+
+COPY . $APPLICATION_DIR

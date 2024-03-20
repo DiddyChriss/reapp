@@ -30,4 +30,4 @@ while true; do
     sleep $DELAY
 done
 
-echo "Successfully logged in to Docker registry."
+echo Successfully logged in to Docker registry.

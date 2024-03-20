@@ -23,4 +23,4 @@ while true; do
     sleep $DELAY
 done
 
-echo "Successfully - containers and images Removed."
+echo Successfully - containers and images Removed.

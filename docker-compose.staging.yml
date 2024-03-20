@@ -20,9 +20,9 @@ services:
     ports:
       - "80:8000"
     volumes:
-      - ./:/usr/src/app
-      - ./static/:/usr/src/app/static
-      - ./static/:/usr/src/app/staticfiles
+      - ./:/usr/src/reapp
+      - ./static/:/usr/src/reapp/static
+      - ./static/:/usr/src/reapp/staticfiles
     depends_on:
       - propertysqldb
     command: >
