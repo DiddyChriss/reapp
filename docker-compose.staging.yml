@@ -31,7 +31,7 @@ services:
              python3 manage.py migrate &&
              chmod +x scripts/create_superuser.sh &&
              /bin/sh -c './scripts/create_superuser.sh' &&
-             python3 manage.py runserver 0.0.0.0:8000" -d
+             python3 manage.py runserver 0.0.0.0:8000"
 volumes:
   postgres_data:
 

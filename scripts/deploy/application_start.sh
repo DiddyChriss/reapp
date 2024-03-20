@@ -18,4 +18,4 @@ scripts/docker_login.sh
 docker pull $REPOSITORY_URI:$IMAGE_TAG
 
 # Run containers
-docker compose -f docker-compose.staging.yml up
+docker compose -f docker-compose.staging.yml up -d
