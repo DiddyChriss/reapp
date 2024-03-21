@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+echo Containers running:
+docker ps
+
 # Your validation logic follows for propertybackend
 if docker ps | grep -q propertybackend; then
   echo propertybackend service is running.

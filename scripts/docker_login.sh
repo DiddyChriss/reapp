@@ -3,31 +3,22 @@
 # Source environment variables
 source ./.env
 
-# Set the repository URI and region
+echo Docker login script
+
+echo Set the repository URI and region
 REPOSITORY_URI="${REPOSITORY_URI}"
 REGION="${REGION}"
 
-# Set the maximum number of attempts
-MAX_ATTEMPTS=5
+echo Set timeout to 10 seconds
+TIMEOUT=10
 
-# Set the delay between attempts in seconds
-DELAY=10
-
-# Initialize attempt counter
-attempt=1
-
-while true; do
-    echo "Attempt $attempt of $MAX_ATTEMPTS: Logging in to Docker registry..."
-    aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REPOSITORY_URI && break
-
-    if [ "$attempt" -ge "$MAX_ATTEMPTS" ]; then
-        echo "Failed to log in after $MAX_ATTEMPTS attempts."
-        exit 1
-    fi
-
-    echo "Login attempt failed. Retrying in $DELAY seconds..."
-    attempt=$((attempt+1))
-    sleep $DELAY
-done
+echo Run the login command with a timeout
+LOGIN_COMMAND=$(aws ecr get-login-password --region $REGION)
+if [ $? -eq 0 ]; then
+    echo $LOGIN_COMMAND | timeout $TIMEOUT docker login --username AWS --password-stdin $REPOSITORY_URI && echo "Login successful" || (echo "Login command timed out or failed" && exit 1)
+else
+    echo Failed to retrieve login password
+    exit 1
+fi
 
 echo Successfully logged in to Docker registry.
