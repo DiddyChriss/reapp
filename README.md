@@ -14,7 +14,7 @@ Simple API for managing properties, contain:
 * Django REST Framework
 * Docker
 * Docker-compose
-* AWS
+* AWS (CodePipeline, CodeBuild, CodeDeploy, EC2, S3)
 
 ### Linux 
 
