@@ -117,11 +117,9 @@ def lambda_handler(event, context):
             stages.append(
                 {
                     "name": "Test",
-                    "status": (
-                        STATUS_MAPPING["INPROGRESS"]
-                        if pipeline_status == "INPROGRESS"
+                    "status": STATUS_MAPPING["INPROGRESS"]
+                        if pipeline_status == STATUS_MAPPING["INPROGRESS"]
                         else STATUS_MAPPING["FAILED"],
-                    )
                 }
             )
         _set_stages(action, stages)
