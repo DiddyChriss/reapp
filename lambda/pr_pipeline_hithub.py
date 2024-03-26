@@ -92,7 +92,8 @@ def lambda_handler(event, context):
     response_pipline_stages = codepipeline_client.list_action_executions(
         pipelineName=message_data['detail']['pipeline'],
         filter={'pipelineExecutionId': message_data['detail']['execution-id']}
-    )
+    )['actionExecutionDetails'][::-1]
+
     logger.info("Response Pipeline Stages: %s", response_pipline_stages)
 
     if artifact_revisions := response_pipline['pipelineExecution'].get('artifactRevisions'):
@@ -113,8 +114,9 @@ def lambda_handler(event, context):
         }
     ]
 
-    for action in action_list := response_pipline_stages['actionExecutionDetails'][::-1]:
-        if "Test" not in action_list:
+
+    for action in response_pipline_stages:
+        if "Test" not in response_pipline_stages:
             stages.append(
                 {
                     "name": "Test",
