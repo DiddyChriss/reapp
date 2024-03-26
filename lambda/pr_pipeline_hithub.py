@@ -113,7 +113,14 @@ def lambda_handler(event, context):
         }
     ]
 
-    for action in response_pipline_stages['actionExecutionDetails'][::-1]:
+    for action in action_list := response_pipline_stages['actionExecutionDetails'][::-1]:
+        if "Test" not in action_list:
+            stages.append(
+                {
+                    "name": "Test",
+                    "status": STATUS_MAPPING["INPROGRESS"],
+                }
+            )
         _set_stages(action, stages)
 
     for stage in stages:
