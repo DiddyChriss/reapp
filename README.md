@@ -6,6 +6,7 @@ non-commercial app is more like proof of concept:
 * inconsistency - as app themselves and also on AWS environment names may not be consistent and related to good practices
 * tests covered need to be extended(including lambda)
 * `UserManager` needs to be implemented
+* linters needs to be implemented
 * and so on..
 
 ### App contains:
