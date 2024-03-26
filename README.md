@@ -1,8 +1,14 @@
-# Property App dedicated to Interview for Zero Deposit
+# Property App
 
 ## About Project
-Simple API for managing properties, contain:
+Simple API for managing properties, designed mostly for presentation/tutorials, as the typically
+non-commercial app is more like proof of concept:
+* inconsistency - as app themselves and also on AWS environment names may not be consistent and related to good practices
+* tests covered need to be extended(including lambda)
+* `UserManager` needs to be implemented
+* and so on..
 
+### App contains:
 * Core app
 * User app
 * Property app
@@ -14,7 +20,12 @@ Simple API for managing properties, contain:
 * Django REST Framework
 * Docker
 * Docker-compose
-* AWS (CodePipeline, CodeBuild, CodeDeploy, EC2, S3)
+* AWS
+
+### AWS
+* App contain two pipelines(CodePiepline)
+  - Staging - Pipeline with stages Source, Build(codebuild), Tests(CodeBuild) and Deploy(CodeDeploy) to EC2 instance
+  - PR - pipeline with stages Source, Build(codebuild), Tests(CodeBuild) integrated with GitHub PRs by SNS and Lambda function.
 
 ### Linux 
 

@@ -96,31 +96,32 @@ def lambda_handler(event, context):
 
     logger.info("Response Pipeline Stages: %s", response_pipline_stages)
 
-    if artifact_revisions := response_pipline['pipelineExecution'].get('artifactRevisions'):
-        commit_id = artifact_revisions[0]['revisionId']
-        revision_url = artifact_revisions[0]['revisionUrl']
+    artifact_revisions = response_pipline['pipelineExecution'].get('artifactRevisions')
+    commit_id = artifact_revisions[0]['revisionId']
+    revision_url = artifact_revisions[0]['revisionUrl']
 
-        if "FullRepositoryId=" in revision_url:
-            repo_id = revision_url.split("FullRepositoryId=")[1].split("&")[0]
-    else:
-        logger.error("No artifact revisions found. Pipeline may have been triggered manually without a commit.")
+    if "FullRepositoryId=" in revision_url:
+        repo_id = revision_url.split("FullRepositoryId=")[1].split("&")[0]
 
-        return ()
+    pipeline_status = STATUS_MAPPING[message_data['detail']['state'].upper()]
 
     stages = [
         {
             "name": "CodePipeline",
-            "status": STATUS_MAPPING[message_data['detail']['state'].upper()]
+            "status": pipeline_status
         }
     ]
-
 
     for action in response_pipline_stages:
         if "Test" not in response_pipline_stages:
             stages.append(
                 {
                     "name": "Test",
-                    "status": STATUS_MAPPING["INPROGRESS"],
+                    "status": (
+                        STATUS_MAPPING["INPROGRESS"]
+                        if pipeline_status == "INPROGRESS"
+                        else STATUS_MAPPING["FAILED"],
+                    )
                 }
             )
         _set_stages(action, stages)
