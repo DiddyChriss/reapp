@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - set -e
       - chmod -R +x scripts/
       - scripts/create_env_file.sh
       - chmod +x .env
