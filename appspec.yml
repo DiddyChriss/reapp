@@ -3,7 +3,7 @@ os: linux
 hooks:
   BeforeInstall:
     - location: scripts/deploy/before_install.sh
-      timeout: 200
+      timeout: 60
       runas: root
   ApplicationStart:
     - location: scripts/deploy/application_start.sh

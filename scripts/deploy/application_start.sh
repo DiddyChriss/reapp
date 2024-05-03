@@ -8,7 +8,6 @@ source ./.env
 
 echo Set the repository URI and region variables
 REPOSITORY_URI="${REPOSITORY_URI}"
-#REGION="${REGION}"
 IMAGE_TAG="${IMAGE_TAG}"
 
 # Login to the Docker registry

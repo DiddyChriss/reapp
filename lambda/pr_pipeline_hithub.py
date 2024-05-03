@@ -9,6 +9,7 @@ import urllib3
 from base64 import b64encode
 
 codepipeline_client = boto3.client("codepipeline")
+stepfunction_client = boto3.client('stepfunctions')
 integration_user = os.environ["INTEGRATION_AUTH_USER"]
 integration_pass = os.environ["INTEGRATION_AUTH_PASS"]
 integration_type = os.environ["INTEGRATION_TYPE"]
@@ -30,6 +31,7 @@ STATUS_MAPPING = {
     "FAILED": "error",
 }
 
+STEP_FUNCTION_ARN = os.environ["STEP_FUNCTION_ARN"]
 
 def _set_stages(action: dict, stages: list) -> list:
     """Set stages of the pipeline execution for GitHub status checks."""
@@ -85,6 +87,18 @@ def _send_request(commit_id: str, stage_status_data: dict, repo_id: str = None) 
     logger.info("Request Action Send: %s", request_action.data)
 
 
+def _execute_step_function(pipeline_name: str, pipeline_status: str) -> None:
+    response = stepfunction_client.start_execution(
+        stateMachineArn=STEP_FUNCTION_ARN,
+        input=json.dumps({
+            "pipeline_name": pipeline_name,
+            "pipeline_status": pipeline_status,
+        })
+    )
+
+    logger.info("Step Function Response: %s", response)
+
+
 def lambda_handler(event, context):
     message = event["Records"][0]["Sns"]["Message"]
     message_data = json.loads(message)
@@ -137,5 +151,13 @@ def lambda_handler(event, context):
             _set_stage_status(stage["name"], stage["status"], message_data),
             repo_id,
         )
+
+    pipeline_name = response_pipline["pipelineExecution"]["pipelineName"]
+
+    if pipeline_status.upper() in [
+        STATUS_MAPPING["SUCCEEDED"].upper(),
+        STATUS_MAPPING["FAILED"].upper()
+        ]:
+        _execute_step_function(pipeline_name, pipeline_status)
 
     return message

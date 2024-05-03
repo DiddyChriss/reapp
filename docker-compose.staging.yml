@@ -7,6 +7,8 @@ services:
       - POSTGRES_DB=${BACKEND_POSTGRES_NAME}
       - POSTGRES_USER=${BACKEND_POSTGRES_USER}
       - POSTGRES_PASSWORD=${BACKEND_POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
   propertybackend:
